@@ -193,7 +193,7 @@ async function showSplashScreen() {
         font-size: 30px;
         text-align: center;
     `;
-    splashScreen.innerHTML = '<span style="color:red;">Desenvolvido Por </span><span style="color:blue;">ScxttZarek</span>';
+    splashScreen.innerHTML = '<span>Desenvolvido por Zarek</span>';
     document.body.appendChild(splashScreen);
     setTimeout(() => splashScreen.style.opacity = '1', 10);
 
@@ -220,7 +220,8 @@ loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css');
 
 // Carrega o Toastify e inicia as funcionalidades
 loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
-    sendToast("Desenvolvido Por ScxttZarek", 5000, 'bottom');
+    await showSplashScreen();
+    sendToast("KhanInnovate", 5000, 'bottom');
     window.features.autoAnswer = true;
     spoofQuestion();
     autoAnswer();
