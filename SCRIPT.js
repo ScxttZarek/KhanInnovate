@@ -59,7 +59,7 @@ function findAndClickByClass(className) {
     if (element) {
         element.click();
         if (element.textContent === 'Mostrar resumo') {
-            sendToast("Exercício concluido!", 3000);
+            sendToast("Exercício concluído!", 3000);
             playAudio('https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/4x5g14gj.wav');
         }
     }
@@ -90,8 +90,8 @@ async function loadCss(url) {
 // Função para modificar as questões (spoof)
 function spoofQuestion() {
     const phrases = [
-        "Made by [@Pdzinn013]"
-        "[Instagram.com/Pdzinn013]
+        "Made by [@Pdzinn013]",
+        "Instagram.com/Pdzinn013"
     ];
 
     const originalFetch = window.fetch;
@@ -132,7 +132,7 @@ function spoofQuestion() {
                     };
 
                     responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
-                    sendToast("Questão Bypased.", 1000);
+                    sendToast("Questão Bypassed.", 1000);
 
                     return new Response(JSON.stringify(responseObj), {
                         status: originalResponse.status,
