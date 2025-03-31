@@ -1,3 +1,6 @@
+Aqui está o código atualizado sem os emojis:
+
+```javascript
 const ver = "V3.0.5";
 
 // Configurações de atraso para as funcionalidades
@@ -67,7 +70,7 @@ function findAndClickByClass(className) {
 }
 
 // Função para carregar um script externo
-async function loadScript(url) {
+async function loadScript(url, label) {
     return fetch(url)
         .then(response => response.text())
         .then(script => {
@@ -90,7 +93,7 @@ async function loadCss(url) {
 // Função para modificar as questões (spoof)
 function spoofQuestion() {
     const phrases = [
-        "Made by [@Pdzinn013]"
+        "Made by [@Iyrakkkj](Instagram.com/Pdzinn013)."
     ];
 
     const originalFetch = window.fetch;
@@ -131,7 +134,7 @@ function spoofQuestion() {
                     };
 
                     responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
-                    sendToast("Questão Bypassed.", 1000);
+                    sendToast("Questão Bypased.", 1000);
 
                     return new Response(JSON.stringify(responseObj), {
                         status: originalResponse.status,
@@ -171,6 +174,38 @@ function autoAnswer() {
     })();
 }
 
+// Função para exibir a tela de inicialização
+async function showSplashScreen() {
+    const splashScreen = document.createElement('div');
+    splashScreen.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+        user-select: none;
+        color: white;
+        font-family: MuseoSans, sans-serif;
+        font-size: 30px;
+        text-align: center;
+    `;
+    splashScreen.innerHTML = '<span>Desenvolvido por Zarek</span>';
+    document.body.appendChild(splashScreen);
+    setTimeout(() => splashScreen.style.opacity = '1', 10);
+
+    await delay(2000);
+    splashScreen.style.opacity = '0';
+    await delay(1000);
+    splashScreen.remove();
+}
+
 // Verifica se o script está sendo executado no site correto
 if (!/^https?:\/\/pt\.khanacademy\.org/.test(window.location.href)) {
     alert("KhanInnovate Failed to Injected!\n\nVocê precisa executar o KhanInnovate no site do Khan Academy! (https://pt.khanacademy.org/)");
@@ -188,9 +223,11 @@ loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css');
 
 // Carrega o Toastify e inicia as funcionalidades
 loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
-    sendToast("Desenvolvido por ScxttZarek", 5000, 'bottom');
+    await showSplashScreen();
+    sendToast("KhanInnovate", 5000, 'bottom');
     window.features.autoAnswer = true;
     spoofQuestion();
     autoAnswer();
     console.clear();
 });
+```
