@@ -67,7 +67,7 @@ function findAndClickByClass(className) {
 }
 
 // Função para carregar um script externo
-async function loadScript(url, label) {
+async function loadScript(url) {
     return fetch(url)
         .then(response => response.text())
         .then(script => {
