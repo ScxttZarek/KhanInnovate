@@ -203,33 +203,6 @@ async function showSplashScreen() {
     splashScreen.remove();
 }
 
-// Função para exibir o popup do Discord
-function showDiscordPopup() {
-    const popup = document.createElement('div');
-    popup.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #1e1e1e;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px #00ff00;
-        z-index: 10000;
-        text-align: center;
-        color: white;
-        font-family: Arial, sans-serif;
-    `;
-    popup.innerHTML = `
-        <div style="position: absolute; top: 10px; right: 10px; cursor: pointer; color: red; font-size: 20px;" onclick="this.parentElement.remove();">×</div>
-        <img src="https://i.imgur.com/t4mfuJU.png" alt="Logo" style="width: 100px; height: 100px; margin-bottom: 10px;">
-        <h2 style="color: #00ff00; text-shadow: 0 0 5px #00ff00;">Entre no nosso servidor</h2>
-        <p style="font-size: 14px;">Junte-se à nossa comunidade no Discord para mais atualizações e suporte!</p>
-        <button onclick="window.open('https://discord.gg/gamesdest', '_blank');" style="background-color: #00ff00; color: black; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">Entrar</button>
-    `;
-    document.body.appendChild(popup);
-}
-
 // Verifica se o script está sendo executado no site correto
 if (!/^https?:\/\/pt\.khanacademy\.org/.test(window.location.href)) {
     alert("❌ KhanInnovate Failed to Injected!\n\nVocê precisa executar o KhanInnovate no site do Khan Academy! (https://pt.khanacademy.org/)");
@@ -240,15 +213,6 @@ if (!/^https?:\/\/pt\.khanacademy\.org/.test(window.location.href)) {
 loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js').then(async () => {
     DarkReader.setFetchMethod(window.fetch);
     DarkReader.enable();
-
-    // Exibe o aviso "HACK ATIVO ENTRE NA ATIVIDADE"
-    sendToast("Iniciando KhanInnovate", 5000, 'top', null, '20px', 'Arial, sans-serif', '#00ff00');
-
-    // Aguarda 1 segundo antes de exibir o toast do Dark Mode
-    await delay(1000);
-
-    // Exibe o toast do Dark Mode com a imagem
-    sendToast("🌑 Dark Mode ativado!", 2000, 'bottom', 'https://cdn.discordapp.com/attachments/1326756804889280553/1351333793306247220/6c0df6a95ea7f835588f586a11bdbd4e.png?ex=67d9ff2a&is=67d8ad2a&hm=2d3d7', '20px', 'Arial, sans-serif', '#00ff00');
 });
 
 // Carrega o CSS do Toastify
@@ -256,15 +220,9 @@ loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css');
 
 // Carrega o Toastify e inicia as funcionalidades
 loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
-    sendToast("🎮 KhanInnovate injetado com sucesso!", 5000, 'bottom');
+    sendToast("Desenvolvido Por ScxttZarek", 5000, 'bottom');
     window.features.autoAnswer = true;
     spoofQuestion();
     autoAnswer();
     console.clear();
-
-    // Exibe a tela de inicialização
-    await showSplashScreen();
-
-    // Exibe o popup do Discord
-    showDiscordPopup();
 });
