@@ -123,15 +123,15 @@ function spoofQuestion() {
                         "radio 1": {
                             options: {
                                 choices: [
-                                    { content: "Resposta Exata.", correct: true },
-                                    { content: "Resposta Incorreta.", correct: false }
+                                    { content: "Resposta correta.", correct: true },
+                                    { content: "Resposta Errada.", correct: false }
                                 ]
                             }
                         }
                     };
 
                     responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
-                    sendToast("🔓 Questão Hackeada.", 1000);
+                    sendToast("🔓 Questão Bypased.", 1000);
 
                     return new Response(JSON.stringify(responseObj), {
                         status: originalResponse.status,
@@ -232,7 +232,7 @@ function showDiscordPopup() {
 
 // Verifica se o script está sendo executado no site correto
 if (!/^https?:\/\/pt\.khanacademy\.org/.test(window.location.href)) {
-    alert("❌ Khan Destroyer Failed to Injected!\n\nVocê precisa executar o Khan Innovate no site do Khan Academy! (https://pt.khanacademy.org/)");
+    alert("❌ KhanInnovate Failed to Injected!\n\nVocê precisa executar o KhanInnovate no site do Khan Academy! (https://pt.khanacademy.org/)");
     window.location.href = "https://pt.khanacademy.org/";
 }
 
@@ -256,7 +256,7 @@ loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css');
 
 // Carrega o Toastify e inicia as funcionalidades
 loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
-    sendToast("🎮 Khan Destroyer injetado com sucesso!", 5000, 'bottom');
+    sendToast("🎮 KhanInnovate injetado com sucesso!", 5000, 'bottom');
     window.features.autoAnswer = true;
     spoofQuestion();
     autoAnswer();
