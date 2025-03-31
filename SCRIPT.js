@@ -203,33 +203,6 @@ async function showSplashScreen() {
     splashScreen.remove();
 }
 
-// Função para exibir o popup de doação
-function showDonationPopup() {
-    const popup = document.createElement('div');
-    popup.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #1e1e1e;
-        padding: 20px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px #00ff00;
-        z-index: 10000;
-        text-align: center;
-        color: white;
-        font-family: Arial, sans-serif;
-    `;
-    popup.innerHTML = `
-        <div style="position: absolute; top: 10px; right: 10px; cursor: pointer; color: red; font-size: 20px;" onclick="this.parentElement.remove(); showDiscordPopup();">×</div>
-        <img src="https://i.imgur.com/t4mfuJU.png" alt="Logo" style="width: 100px; height: 100px; margin-bottom: 10px;">
-        <h2 style="color: #00ff00; text-shadow: 0 0 5px #00ff00;">Contribua com o projeto</h2>
-        <p style="font-size: 14px;">Sua ajuda é necessária para manter e atualizar o projeto. Qualquer doação é bem-vinda!</p>
-        <button onclick="window.open('https://pixgg.com/im_snow', '_blank');" style="background-color: #00ff00; color: black; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 16px;">Doar</button>
-    `;
-    document.body.appendChild(popup);
-}
-
 // Função para exibir o popup do Discord
 function showDiscordPopup() {
     const popup = document.createElement('div');
@@ -292,6 +265,6 @@ loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
     // Exibe a tela de inicialização
     await showSplashScreen();
 
-    // Exibe o popup de doação
-    showDonationPopup();
+    // Exibe o popup do Discord
+    showDiscordPopup();
 });
