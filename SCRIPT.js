@@ -91,7 +91,7 @@ javascript:(function(){
     // Função para modificar as questões (spoof)
     function spoofQuestion() {
         const phrases = [
-            "Made by [@Iyrakkkj](Instagram.com/Pdzinn013)."
+            "Made by [@ScxttZarek](Instagram.com/Pdzinn013)."
         ];
 
         const originalFetch = window.fetch;
@@ -194,38 +194,4 @@ javascript:(function(){
             font-size: 30px;
             text-align: center;
         `;
-        splashScreen.innerHTML = '<span>Desenvolvido por Zarek</span>';
-        document.body.appendChild(splashScreen);
-        setTimeout(() => splashScreen.style.opacity = '1', 10);
-
-        await delay(2000);
-        splashScreen.style.opacity = '0';
-        await delay(1000);
-        splashScreen.remove();
-    }
-
-    // Verifica se o script está sendo executado no site correto
-    if (!/^https?:\/\/pt\.khanacademy\.org/.test(window.location.href)) {
-        alert("KhanInnovate Failed to Injected!\n\nVocê precisa executar o KhanInnovate no site do Khan Academy! (https://pt.khanacademy.org/)");
-        window.location.href = "https://pt.khanacademy.org/";
-    }
-
-    // Carrega o Dark Reader e ativa o modo escuro
-    loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js').then(async () => {
-        DarkReader.setFetchMethod(window.fetch);
-        DarkReader.enable();
-    });
-
-    // Carrega o CSS do Toastify
-    loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css');
-
-    // Carrega o Toastify e inicia as funcionalidades
-    loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
-        await showSplashScreen();
-        sendToast("KhanInnovate", 5000, 'bottom');
-        window.features.autoAnswer = true;
-        spoofQuestion();
-        autoAnswer();
-        console.clear();
-    });
-})();
+        splashScreen.innerHTML = '<span>Desenvolvido por Zarek`* ▋
