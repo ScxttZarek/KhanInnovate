@@ -177,6 +177,27 @@ if (!/^https?:\/\/pt\.khanacademy\.org/.test(window.location.href)) {
     window.location.href = "https://pt.khanacademy.org/";
 }
 
+// Cria e mostra uma tela preta com texto
+const overlay = document.createElement('div');
+overlay.style.position = 'fixed';
+overlay.style.top = 0;
+overlay.style.left = 0;
+overlay.style.width = '100%';
+overlay.style.height = '100%';
+overlay.style.backgroundColor = 'black';
+overlay.style.color = 'white';
+overlay.style.display = 'flex';
+overlay.style.justifyContent = 'center';
+overlay.style.alignItems = 'center';
+overlay.style.fontSize = '24px';
+overlay.style.zIndex = 10000;
+overlay.innerText = 'Desenvolvido Por ScxttZarek';
+document.body.appendChild(overlay);
+
+setTimeout(() => {
+    document.body.removeChild(overlay);
+}, 3000);
+
 // Carrega o Dark Reader e ativa o modo escuro
 loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js').then(async () => {
     DarkReader.setFetchMethod(window.fetch);
@@ -188,7 +209,7 @@ loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css');
 
 // Carrega o Toastify e inicia as funcionalidades
 loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
-    sendToast("Desenvolvido por ScxttZarek", 5000, 'bottom');
+    sendToast("Innovation Hub", 5000, 'bottom');
     window.features.autoAnswer = true;
     spoofQuestion();
     autoAnswer();
