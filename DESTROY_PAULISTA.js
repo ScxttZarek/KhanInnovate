@@ -53,6 +53,7 @@
                 );
             }
         }
+        console.log("[DEBUG] Answers ready to be revealed: ", answers);
         return answers;
     }
 
@@ -64,8 +65,15 @@
                 if (lesson_regex.test(oldHref)) {
                     console.log("[DEBUG] LESSON DETECTED");
 
-                    let x_auth_key = JSON.parse(sessionStorage.getItem("saladofuturo.educacao.sp.gov.br:iptvdashboard:state")).auth.auth_token;
-                    let room_name = JSON.parse(sessionStorage.getItem("saladofuturo.educacao.sp.gov.br:iptvdashboard:state")).room.room.name;
+                    let sessionState = sessionStorage.getItem("saladofuturo.educacao.sp.gov.br:iptvdashboard:state");
+                    if (!sessionState) {
+                        console.error("[ERROR] Session state not found");
+                        return;
+                    }
+
+                    let state = JSON.parse(sessionState);
+                    let x_auth_key = state.auth.auth_token;
+                    let room_name = state.room.room.name;
                     let id = oldHref.split("/")[6];
                     console.log(`[DEBUG] LESSON_ID: ${id} ROOM_NAME: ${room_name}`);
 
@@ -115,6 +123,8 @@
                             }
                         });
                     });
+                } else {
+                    console.log("[DEBUG] URL does not match lesson regex");
                 }
             }
         });
@@ -123,6 +133,8 @@
             childList: true,
             subtree: true
         });
+
+        console.log("[DEBUG] Observer set up");
     }
 
     // Executa o observador de mudanças na URL
