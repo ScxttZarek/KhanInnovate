@@ -1,75 +1,36 @@
 (function() {
     'use strict';
 
-    let lesson_regex = /https:\/\/saladofuturo\.educacao\.sp\.gov\.br\/mobile\/tms\/task\/\d+\/apply/;
+    let lesson_regex = /https:\/\/saladofuturo\.educacao\.sp\.gov\.br\/tms\/task\/\d+\/apply/;
     console.log("-- STARTING DESTROY PAULISTA By scxttzarek --");
 
-    function transformJson(jsonOriginal) {
-        let novoJson = {
-            status: "submitted",
-            accessed_on: jsonOriginal.accessed_on,
-            executed_on: jsonOriginal.executed_on,
-            answers: {}
-        };
-
+    function revealAnswers(jsonOriginal) {
+        let answers = {};
+        
         for (let questionId in jsonOriginal.answers) {
             let question = jsonOriginal.answers[questionId];
             let taskQuestion = jsonOriginal.task.questions.find(q => q.id === parseInt(questionId));
 
             if (taskQuestion.type === "order-sentences") {
-                let answer = taskQuestion.options.sentences.map(sentence => sentence.value);
-                novoJson.answers[questionId] = {
-                    question_id: question.question_id,
-                    question_type: taskQuestion.type,
-                    answer: answer
-                };
+                answers[questionId] = taskQuestion.options.sentences.map(sentence => sentence.value);
             } else if (taskQuestion.type === "fill-words") {
                 let pre_answer = taskQuestion.options;
-                let answer = pre_answer.phrase
+                answers[questionId] = pre_answer.phrase
                     .map(item => item.value)
                     .filter((_, index) => index % 2 !== 0); // Pegue apenas os índices ímpares
-
-                //console.log(`[DEBUG] ${JSON.stringify(answer)}`)
-                novoJson.answers[questionId] = {
-                    question_id: question.question_id,
-                    question_type: taskQuestion.type,
-                    answer: answer
-                };
             } else if (taskQuestion.type === "text_ai") {
-                let answer = taskQuestion.comment.replace(/<\/?p>/g, '');
-                novoJson.answers[questionId] = {
-                    question_id: question.question_id,
-                    question_type: taskQuestion.type,
-                    answer: {
-                        "0": answer
-                    }
-                };
+                answers[questionId] = taskQuestion.comment.replace(/<\/?p>/g, '');
             } else if (taskQuestion.type === "fill-letters") {
-                let answer = taskQuestion.options.answer;
-                novoJson.answers[questionId] = {
-                    question_id: question.question_id,
-                    question_type: taskQuestion.type,
-                    answer: answer
-                };
+                answers[questionId] = taskQuestion.options.answer;
             } else if (taskQuestion.type === "cloud") {
-                let answer = taskQuestion.options.ids;
-                novoJson.answers[questionId] = {
-                    question_id: question.question_id,
-                    question_type: taskQuestion.type,
-                    answer: answer
-                };
+                answers[questionId] = taskQuestion.options.ids;
             } else {
-                let answer = Object.fromEntries(
+                answers[questionId] = Object.fromEntries(
                     Object.keys(taskQuestion.options).map(optionId => [optionId, taskQuestion.options[optionId].answer])
                 );
-                novoJson.answers[questionId] = {
-                    question_id: question.question_id,
-                    question_type: taskQuestion.type,
-                    answer: answer
-                };
             }
         }
-        return novoJson;
+        return answers;
     }
 
     let oldHref = document.location.href;
@@ -113,25 +74,21 @@
                         console.log(`[DEBUG] Get Answers request received response`);
                         console.log(`[DEBUG] GET ANSWERS RESPONSE: ${response.responseText}`);
                         let get_anwsers_response = JSON.parse(response.responseText);
-                        let send_anwsers_body = transformJson(get_anwsers_response);
+                        let answers = revealAnswers(get_anwsers_response);
 
-                        console.log(`[DEBUG] Sending Answers... BODY: ${JSON.stringify(send_anwsers_body)}`);
+                        console.log(`[DEBUG] Revealed Answers: ${JSON.stringify(answers)}`);
 
-                        sendRequest("PUT", `https://edusp-api.ip.tv/tms/task/${id}/answer/${task_id}`, send_anwsers_body, (response) => {
-                            if (response.status !== 200) {
-                                alert(`[ERROR] An error occurred while sending the answers. RESPONSE: ${response.responseText}`);
+                        // Display the answers on the page
+                        for (let questionId in answers) {
+                            let answer = answers[questionId];
+                            let questionElement = document.querySelector(`[data-question-id='${questionId}']`);
+                            if (questionElement) {
+                                let answerElement = document.createElement('div');
+                                answerElement.textContent = `Answer: ${JSON.stringify(answer)}`;
+                                answerElement.style.color = 'red';
+                                questionElement.appendChild(answerElement);
                             }
-                            console.log(`[DEBUG] Answers Sent! RESPONSE: ${response.responseText}`);
-
-                            const watermark = document.querySelector('.MuiTypography-root.MuiTypography-body1.css-1exusee');
-                            if (watermark) {
-                                watermark.textContent = 'made by scxttzarek :P';
-                                watermark.style.fontSize = '70px';
-                                setTimeout(() => {
-                                    document.querySelector('button.MuiButtonBase-root.MuiButton-root.MuiLoadingButton-root.MuiButton-contained.MuiButton-containedInherit.MuiButton-sizeMedium.MuiButton-containedSizeMedium.MuiButton-colorInherit.css-prsfpd').click();
-                                }, 500);
-                            }
-                        });
+                        }
                     });
                 });
             }
