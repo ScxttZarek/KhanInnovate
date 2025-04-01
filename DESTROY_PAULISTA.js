@@ -1,6 +1,29 @@
 (function() {
     'use strict';
 
+    // Função para exibir a mensagem de desenvolvimento
+    function showDevelopmentMessage() {
+        const messageDiv = document.createElement('div');
+        messageDiv.textContent = "Desenvolvido Por ScxttZarek";
+        messageDiv.style.position = 'fixed';
+        messageDiv.style.top = '10px';
+        messageDiv.style.left = '50%';
+        messageDiv.style.transform = 'translateX(-50%)';
+        messageDiv.style.backgroundColor = 'black';
+        messageDiv.style.color = 'white';
+        messageDiv.style.padding = '10px';
+        messageDiv.style.zIndex = '9999';
+        messageDiv.style.fontSize = '20px';
+        document.body.appendChild(messageDiv);
+
+        setTimeout(() => {
+            document.body.removeChild(messageDiv);
+        }, 4800); // 4,8 segundos
+    }
+
+    // Exibe a mensagem de desenvolvimento
+    showDevelopmentMessage();
+
     let lesson_regex = /https:\/\/saladofuturo\.educacao\.sp\.gov\.br\/tms\/task\/\d+\/apply/;
     console.log("-- STARTING DESTROY PAULISTA By scxttzarek --");
 
