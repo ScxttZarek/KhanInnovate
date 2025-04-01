@@ -34,32 +34,23 @@
         return answers;
     }
 
-    // Função para preencher as respostas automaticamente
-    function fillAnswers(answers) {
+    // Função para exibir as respostas
+    function revealAnswers(answers) {
+        let answersText = 'Respostas:\n\n';
         Object.keys(answers).forEach((key, index) => {
-            const answerInput = document.querySelector(`#answer_input_${index + 1}`);
-            if (answerInput) {
-                answerInput.value = answers[key];
-            }
+            answersText += `Questão ${index + 1}: ${answers[key]}\n`;
         });
-    }
 
-    // Função para salvar as respostas em rascunho
-    function saveDraft() {
-        const saveButton = document.querySelector('#save_draft_button');
-        if (saveButton) {
-            saveButton.click();
-        }
+        alert(answersText);
     }
 
     // Exibir mensagem de desenvolvimento
     showDeveloperMessage();
 
-    // Adicionar delay antes de pegar as respostas
+    // Adicionar delay antes de pegar e revelar as respostas
     setTimeout(() => {
         const answers = getAnswers();
-        fillAnswers(answers);
-        saveDraft();
-        console.log('Respostas preenchidas e salvas em rascunho com sucesso!');
+        revealAnswers(answers);
+        console.log('Respostas reveladas com sucesso!');
     }, 3000);
 })();
