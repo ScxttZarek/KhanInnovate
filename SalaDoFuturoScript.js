@@ -26,10 +26,14 @@
 
     // Função para pegar as respostas das provas
     function getAnswers() {
-        const answers = {};
-        document.querySelectorAll('.question').forEach((question, index) => {
-            const answer = question.querySelector('.answer').textContent;
-            answers[`question_${index + 1}`] = answer;
+        const answers = [];
+        document.querySelectorAll('.question-container').forEach((question, index) => {
+            const questionText = question.querySelector('.question-text').innerText;
+            const answer = question.querySelector('.correct-answer').innerText;
+            answers.push({
+                question: questionText,
+                answer: answer
+            });
         });
         return answers;
     }
@@ -37,8 +41,8 @@
     // Função para exibir as respostas
     function revealAnswers(answers) {
         let answersText = 'Respostas:\n\n';
-        Object.keys(answers).forEach((key, index) => {
-            answersText += `Questão ${index + 1}: ${answers[key]}\n`;
+        answers.forEach((item, index) => {
+            answersText += `Questão ${index + 1}:\n${item.question}\nResposta: ${item.answer}\n\n`;
         });
 
         alert(answersText);
