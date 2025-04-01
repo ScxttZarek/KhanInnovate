@@ -24,7 +24,7 @@
     // Exibe a mensagem de desenvolvimento
     showDevelopmentMessage();
 
-    let lesson_regex = /https:\/\/saladofuturo\.educacao\.sp\.gov\.br\/tms\/task\/\d+\/apply/;
+    let lesson_regex = /https:\/\/saladofuturo\.educacao\.sp\.gov\.br\/provas/;
     console.log("-- STARTING DESTROY PAULISTA By scxttzarek --");
 
     function revealAnswers(jsonOriginal) {
