@@ -91,7 +91,7 @@ javascript:(function(){
     // Função para modificar as questões (spoof)
     function spoofQuestion() {
         const phrases = [
-            "Made by [@Iyrakkkj](Instagram.com/Pdzinn013)."
+            "Made by [@Iyrakkkj Instagram.com/Pdzinn013].".
         ];
 
         const originalFetch = window.fetch;
