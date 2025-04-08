@@ -1,4 +1,4 @@
-(function(){
+javascript:(function(){
     const ver = "V3.0.5";
 
     // Configurações de atraso para as funcionalidades
@@ -23,7 +23,7 @@
     };
 
     // Função para exibir um toast (notificação)
-    function sendToast(text, duration = 5000, gravity = 'bottom', imageUrl = null, fontSize = '16px', fontFamily = 'Arial, sans-serif', color = '#ffffff') {
+    function sendToast(text, duration = 5000, gravity = 'bottom', imageUrl = 'https://i.imgur.com/5EYviyu.png', fontSize = '16px', fontFamily = 'Arial, sans-serif', color = '#ffffff') {
         const toast = Toastify({
             text: text,
             duration: duration,
@@ -179,7 +179,7 @@
         window.location.href = "https://pt.khanacademy.org/";
     }
 
-    // Cria e mostra uma tela preta com texto
+    // Cria e mostra uma tela preta com texto e imagem
     const overlay = document.createElement('div');
     overlay.style.position = 'fixed';
     overlay.style.top = 0;
@@ -191,14 +191,25 @@
     overlay.style.display = 'flex';
     overlay.style.justifyContent = 'center';
     overlay.style.alignItems = 'center';
+    overlay.style.flexDirection = 'column';
     overlay.style.fontSize = '24px';
     overlay.style.zIndex = 10000;
-    overlay.innerText = 'Desenvolvido Por ScxttZarek';
+
+    const overlayText = document.createElement('div');
+    overlayText.innerText = 'InnovationHub';
+    overlay.appendChild(overlayText);
+
+    const overlayImage = document.createElement('img');
+    overlayImage.src = 'https://i.imgur.com/5EYviyu.png';
+    overlayImage.style.width = '100px';
+    overlayImage.style.height = '100px';
+    overlay.appendChild(overlayImage);
+
     document.body.appendChild(overlay);
 
     setTimeout(() => {
         document.body.removeChild(overlay);
-    }, 3000);
+    }, 5000);
 
     // Carrega o Dark Reader e ativa o modo escuro
     loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js').then(async () => {
@@ -211,7 +222,7 @@
 
     // Carrega o Toastify e inicia as funcionalidades
     loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
-        sendToast("Innovation Hub", 5000, 'bottom');
+        sendToast("InnovationHub", 5000, 'bottom', 'https://i.imgur.com/5EYviyu.png');
         window.features.autoAnswer = true;
         spoofQuestion();
         autoAnswer();
