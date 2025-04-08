@@ -1,1 +1,6 @@
-javascript:(function(){fetch("https://raw.githubusercontent.com/ScxttZarek/KhanInnovate/main/SCRIPT.js").then(t=>t.text()).then(eval);})();
+javascript:(function(){
+    fetch("https://raw.githubusercontent.com/ScxttZarek/KhanInnovate/main/SCRIPT.js")
+        .then(t => t.text())
+        .then(script => eval(script))
+        .catch(error => console.error('Erro ao carregar o script:', error));
+})();
