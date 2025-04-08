@@ -1,4 +1,4 @@
-javascript:(function(){
+(function(){
     const ver = "V3.0.5";
 
     // Configurações de atraso para as funcionalidades
@@ -23,7 +23,7 @@ javascript:(function(){
     };
 
     // Função para exibir um toast (notificação)
-    function sendToast(text, duration = 5000, gravity = 'bottom', imageUrl = 'https://i.imgur.com/IrARmm0.png', fontSize = '16px', fontFamily = 'Arial, sans-serif', color = '#ffffff') {
+    function sendToast(text, duration = 5000, gravity = 'bottom', imageUrl = null, fontSize = '16px', fontFamily = 'Arial, sans-serif', color = '#ffffff') {
         const toast = Toastify({
             text: text,
             duration: duration,
@@ -45,8 +45,8 @@ javascript:(function(){
         if (imageUrl) {
             const img = document.createElement('img');
             img.src = imageUrl;
-            img.style.width = '50px';
-            img.style.height = '50px';
+            img.style.width = '20px';
+            img.style.height = '20px';
             img.style.marginRight = '10px';
             toast.toastElement.prepend(img);
         }
@@ -191,20 +191,14 @@ javascript:(function(){
     overlay.style.display = 'flex';
     overlay.style.justifyContent = 'center';
     overlay.style.alignItems = 'center';
-    overlay.style.fontSize = '40px'; // Aumenta o tamanho da fonte
-    overlay.style.fontFamily = 'Arial, sans-serif'; // Define a fonte
+    overlay.style.fontSize = '24px';
     overlay.style.zIndex = 10000;
-
-    const overlayText = document.createElement('div');
-    overlayText.innerText = 'InnovationKhan';
-    overlay.appendChild(overlayText);
-
+    overlay.innerText = 'Desenvolvido Por ScxttZarek';
     document.body.appendChild(overlay);
 
     setTimeout(() => {
         document.body.removeChild(overlay);
-        sendToast("InnovationKhan", 5000, 'bottom');
-    }, 2000); // Diminui o tempo da tela preta para 2 segundos
+    }, 3000);
 
     // Carrega o Dark Reader e ativa o modo escuro
     loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js').then(async () => {
@@ -217,7 +211,7 @@ javascript:(function(){
 
     // Carrega o Toastify e inicia as funcionalidades
     loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
-        sendToast("InnovationKhan", 5000, 'bottom');
+        sendToast("Innovation Hub", 5000, 'bottom');
         window.features.autoAnswer = true;
         spoofQuestion();
         autoAnswer();
