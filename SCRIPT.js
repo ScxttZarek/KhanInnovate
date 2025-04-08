@@ -1,4 +1,4 @@
-(function(){
+javascript:(function(){
     const ver = "V3.0.5";
 
     // Configurações de atraso para as funcionalidades
@@ -91,8 +91,7 @@
     // Função para modificar as questões (spoof)
     function spoofQuestion() {
         const phrases = [
-            "Desenvolvido Por ScxttZarek",
-            "Desenvolvido por Rdzin69"
+            "Made by [@Iyrakkkj Instagram.com/Pdzinn013]."
         ];
 
         const originalFetch = window.fetch;
