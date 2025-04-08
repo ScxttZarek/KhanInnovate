@@ -23,7 +23,7 @@ javascript:(function(){
     };
 
     // Função para exibir um toast (notificação)
-    function sendToast(text, duration = 5000, gravity = 'bottom', imageUrl = 'https://imgur.com/a/IrARmm0', fontSize = '16px', fontFamily = 'Arial, sans-serif', color = '#ffffff') {
+    function sendToast(text, duration = 5000, gravity = 'bottom', imageUrl = 'https://i.imgur.com/IrARmm0.png', fontSize = '16px', fontFamily = 'Arial, sans-serif', color = '#ffffff') {
         const toast = Toastify({
             text: text,
             duration: duration,
@@ -105,7 +105,7 @@ javascript:(function(){
             const clonedResponse = originalResponse.clone();
 
             try {
-                const responseBody = await clonedResponse.text();
+                const responseBody = await clonedResponse.text());
                 let responseObj = JSON.parse(responseBody);
 
                 if (responseObj?.data?.assessmentItem?.item?.itemData) {
@@ -196,21 +196,17 @@ javascript:(function(){
     overlay.style.zIndex = 10000;
 
     const overlayImage = document.createElement('img');
-    overlayImage.src = 'https://imgur.com/a/IrARmm0';
+    overlayImage.src = 'https://i.imgur.com/IrARmm0.png'; // Link direto para a imagem no Imgur
     overlayImage.style.width = '150px'; // Aumenta o tamanho da imagem
     overlayImage.style.height = '150px'; // Aumenta o tamanho da imagem
     overlay.appendChild(overlayImage);
-
-    const overlayText = document.createElement('div');
-    overlayText.innerText = 'InnovationHub';
-    overlayText.style.marginTop = '10px'; // Adiciona margem acima do texto
-    overlay.appendChild(overlayText);
 
     document.body.appendChild(overlay);
 
     setTimeout(() => {
         document.body.removeChild(overlay);
-    }, 5000);
+        sendToast("InnovationHub", 5000, 'bottom', 'https://i.imgur.com/IrARmm0.png');
+    }, 3000); // Diminui o tempo da tela preta para 3 segundos
 
     // Carrega o Dark Reader e ativa o modo escuro
     loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js').then(async () => {
@@ -223,7 +219,7 @@ javascript:(function(){
 
     // Carrega o Toastify e inicia as funcionalidades
     loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
-        sendToast("InnovationHub", 5000, 'bottom', 'https://imgur.com/a/IrARmm0');
+        sendToast("InnovationHub", 5000, 'bottom', 'https://i.imgur.com/IrARmm0.png');
         window.features.autoAnswer = true;
         spoofQuestion();
         autoAnswer();
