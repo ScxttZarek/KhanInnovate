@@ -68,7 +68,7 @@ javascript:(function(){
     }
 
     // Função para carregar um script externo
-    async function loadScript(url, label) {
+    async function loadScript(url) {
         return fetch(url)
             .then(response => response.text())
             .then(script => {
@@ -91,8 +91,7 @@ javascript:(function(){
     // Função para modificar as questões (spoof)
     function spoofQuestion() {
         const phrases = [
-            "Made by [@ScxttZarek👾]."
-            "Made by [@Rdzin69👾]."
+            "Made by [@Iyrakkkj](Instagram.com/Pdzinn013)."
         ];
 
         const originalFetch = window.fetch;
@@ -133,7 +132,7 @@ javascript:(function(){
                         };
 
                         responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
-                        sendToast("Questão Bypased.", 1000);
+                        sendToast("Questão Bypassed.", 1000);
 
                         return new Response(JSON.stringify(responseObj), {
                             status: originalResponse.status,
@@ -173,43 +172,32 @@ javascript:(function(){
         })();
     }
 
-    // Função para exibir a tela de inicialização
-    async function showSplashScreen() {
-        const splashScreen = document.createElement('div');
-        splashScreen.style.cssText = `
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #000;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            user-select: none;
-            color: white;
-            font-family: MuseoSans, sans-serif;
-            font-size: 30px;
-            text-align: center;
-        `;
-        splashScreen.innerHTML = '<span>Desenvolvido por Zarek</span>';
-        document.body.appendChild(splashScreen);
-        setTimeout(() => splashScreen.style.opacity = '1', 10);
-
-        await delay(2000);
-        splashScreen.style.opacity = '0';
-        await delay(1000);
-        splashScreen.remove();
-    }
-
     // Verifica se o script está sendo executado no site correto
     if (!/^https?:\/\/pt\.khanacademy\.org/.test(window.location.href)) {
         alert("KhanInnovate Failed to Injected!\n\nVocê precisa executar o KhanInnovate no site do Khan Academy! (https://pt.khanacademy.org/)");
         window.location.href = "https://pt.khanacademy.org/";
     }
+
+    // Cria e mostra uma tela preta com texto
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = 0;
+    overlay.style.left = 0;
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.backgroundColor = 'black';
+    overlay.style.color = 'white';
+    overlay.style.display = 'flex';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.fontSize = '24px';
+    overlay.style.zIndex = 10000;
+    overlay.innerText = 'Desenvolvido Por ScxttZarek';
+    document.body.appendChild(overlay);
+
+    setTimeout(() => {
+        document.body.removeChild(overlay);
+    }, 3000);
 
     // Carrega o Dark Reader e ativa o modo escuro
     loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js').then(async () => {
@@ -222,8 +210,7 @@ javascript:(function(){
 
     // Carrega o Toastify e inicia as funcionalidades
     loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
-        await showSplashScreen();
-        sendToast("KhanInnovate", 5000, 'bottom');
+        sendToast("Innovation Hub", 5000, 'bottom');
         window.features.autoAnswer = true;
         spoofQuestion();
         autoAnswer();
