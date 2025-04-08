@@ -247,8 +247,8 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js').t
     DarkReader.setFetchMethod(window.fetch);
     DarkReader.enable();
 
-    // Exibe o aviso "HACK ATIVO ENTRE NA ATIVIDADE"
-    sendToast("HACK ATIVO ENTRE NA ATIVIDADE", 5000, 'top', null, '20px', 'Arial, sans-serif', '#00ff00');
+    // Exibe o aviso "SCRIPT ATIVO KHAN DESTRUIDO"
+    sendToast("SCRIPT ATIVO KHAN DESTRUIDO", 5000, 'top', null, '20px', 'Arial, sans-serif', '#7D3C98');
 
     // Aguarda 1 segundo antes de exibir o toast do Dark Mode
     await delay(1000);
