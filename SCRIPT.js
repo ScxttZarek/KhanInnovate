@@ -194,7 +194,7 @@ async function showSplashScreen() {
         font-size: 30px;
         text-align: center;
     `;
-    splashScreen.innerHTML = '<span style="color:white;">KHAN </span><span style="color:#00ff00;">DESTROYER</span>';
+    splashScreen.innerHTML = '<span style="color:white;">Innovation </span><span style="color:#7D3C98;">Khan</span>';
     document.body.appendChild(splashScreen);
     setTimeout(() => splashScreen.style.opacity = '1', 10);
 
@@ -238,7 +238,7 @@ async function showThankYouScreen() {
 
 // Verifica se o script está sendo executado no site correto
 if (!/^https?:\/\/pt\.khanacademy\.org/.test(window.location.href)) {
-    alert("❌ Khan Destroyer Failed to Injected!\n\nVocê precisa executar o Khan Destroyer no site do Khan Academy! (https://pt.khanacademy.org/)");
+    alert("❌ InnovationKhan Failed to Injected!\n\nVocê precisa executar o InnovationKhan no site do Khan Academy! (https://pt.khanacademy.org/)");
     window.location.href = "https://pt.khanacademy.org/";
 }
 
