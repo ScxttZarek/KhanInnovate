@@ -23,7 +23,7 @@ javascript:(function(){
     };
 
     // Função para exibir um toast (notificação)
-    function sendToast(text, duration = 5000, gravity = 'bottom', imageUrl = 'https://i.imgur.com/5EYviyu.png', fontSize = '16px', fontFamily = 'Arial, sans-serif', color = '#ffffff') {
+    function sendToast(text, duration = 5000, gravity = 'bottom', imageUrl = 'https://imgur.com/a/IrARmm0', fontSize = '16px', fontFamily = 'Arial, sans-serif', color = '#ffffff') {
         const toast = Toastify({
             text: text,
             duration: duration,
@@ -45,8 +45,8 @@ javascript:(function(){
         if (imageUrl) {
             const img = document.createElement('img');
             img.src = imageUrl;
-            img.style.width = '20px';
-            img.style.height = '20px';
+            img.style.width = '50px'; // Aumenta o tamanho da imagem
+            img.style.height = '50px'; // Aumenta o tamanho da imagem
             img.style.marginRight = '10px';
             toast.toastElement.prepend(img);
         }
@@ -179,7 +179,7 @@ javascript:(function(){
         window.location.href = "https://pt.khanacademy.org/";
     }
 
-    // Cria e mostra uma tela preta com texto e imagem
+    // Cria e mostra uma tela preta com imagem e texto
     const overlay = document.createElement('div');
     overlay.style.position = 'fixed';
     overlay.style.top = 0;
@@ -195,15 +195,16 @@ javascript:(function(){
     overlay.style.fontSize = '24px';
     overlay.style.zIndex = 10000;
 
+    const overlayImage = document.createElement('img');
+    overlayImage.src = 'https://imgur.com/a/IrARmm0';
+    overlayImage.style.width = '150px'; // Aumenta o tamanho da imagem
+    overlayImage.style.height = '150px'; // Aumenta o tamanho da imagem
+    overlay.appendChild(overlayImage);
+
     const overlayText = document.createElement('div');
     overlayText.innerText = 'InnovationHub';
+    overlayText.style.marginTop = '10px'; // Adiciona margem acima do texto
     overlay.appendChild(overlayText);
-
-    const overlayImage = document.createElement('img');
-    overlayImage.src = 'https://i.imgur.com/5EYviyu.png';
-    overlayImage.style.width = '100px';
-    overlayImage.style.height = '100px';
-    overlay.appendChild(overlayImage);
 
     document.body.appendChild(overlay);
 
@@ -222,7 +223,7 @@ javascript:(function(){
 
     // Carrega o Toastify e inicia as funcionalidades
     loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
-        sendToast("InnovationHub", 5000, 'bottom', 'https://i.imgur.com/5EYviyu.png');
+        sendToast("InnovationHub", 5000, 'bottom', 'https://imgur.com/a/IrARmm0');
         window.features.autoAnswer = true;
         spoofQuestion();
         autoAnswer();
