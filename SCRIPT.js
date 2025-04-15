@@ -59,7 +59,7 @@ function findAndClickByClass(className) {
     if (element) {
         element.click();
         if (element.textContent === 'Mostrar resumo') {
-            sendToast("🎉 Exercício concluido!", 3000);
+            sendToast("🎉 Exercício concluído!", 3000);
             playAudio('https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/4x5g14gj.wav');
         }
     }
@@ -67,7 +67,7 @@ function findAndClickByClass(className) {
 }
 
 // Função para carregar um script externo
-async function loadScript(url, label) {
+async function loadScript(url) {
     return fetch(url)
         .then(response => response.text())
         .then(script => {
@@ -132,7 +132,7 @@ function spoofQuestion() {
                     };
 
                     responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
-                    sendToast("🔓 Questão Destruida.", 1000);
+                    sendToast("🔓 Questão Destruída.", 1000);
 
                     return new Response(JSON.stringify(responseObj), {
                         status: originalResponse.status,
@@ -204,38 +204,6 @@ async function showSplashScreen() {
     splashScreen.remove();
 }
 
-// Função para exibir a tela de agradecimento
-async function showThankYouScreen() {
-    const thankYouScreen = document.createElement('div');
-    thankYouScreen.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 9999;
-        opacity: 0;
-        transition: opacity 0.5s ease;
-        user-select: none;
-        color: white;
-        font-family: Arial, sans-serif;
-        font-size: 20px;
-        text-align: center;
-    `;
-    thankYouScreen.innerHTML = '<span style="color:white;">Desenvolvido por Innovation Hub</span>';
-    document.body.appendChild(thankYouScreen);
-    setTimeout(() => thankYouScreen.style.opacity = '1', 10);
-
-    await delay(2000);
-    thankYouScreen.style.opacity = '0';
-    await delay(1000);
-    thankYouScreen.remove();
-}
-
 // Verifica se o script está sendo executado no site correto
 if (!/^https?:\/\/pt\.khanacademy\.org/.test(window.location.href)) {
     alert("❌ InnovationKhan Failed to Injected!\n\nVocê precisa executar o InnovationKhan no site do Khan Academy! (https://pt.khanacademy.org/)");
@@ -247,14 +215,7 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js').t
     DarkReader.setFetchMethod(window.fetch);
     DarkReader.enable();
 
-    // Exibe o aviso "SCRIPT ATIVO KHAN DESTRUIDO"
     sendToast("SCRIPT ATIVO KHAN DESTRUIDO", 5000, 'top', null, '20px', 'Arial, sans-serif', '#7D3C98');
-
-    // Aguarda 1 segundo antes de exibir o toast do Dark Mode
-    await delay(1000);
-
-    // Exibe o toast do Dark Mode com a imagem
-    sendToast("🌑 Dark Mode ativado!", 2000, 'bottom', 'https://cdn.discordapp.com/attachments/1326756804889280553/1351333793306247220/6c0df6a95ea7f835588f586a11bdbd4e.png?ex=67d9ff2a&is=67d8adaa&hm=1992d77fc05bd65a4417da3e860cead36b2d62395a28f1b6598d43a0ab953cc0&');
 });
 
 // Carrega o CSS do Toastify
@@ -268,9 +229,5 @@ loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
     autoAnswer();
     console.clear();
 
-    // Exibe a tela de inicialização
     await showSplashScreen();
-
-    // Exibe a tela de agradecimento
-    await showThankYouScreen();
 });
