@@ -8,7 +8,6 @@ const featureConfigs = {
 
 // Configurações das funcionalidades
 window.features = {
-    autoAnswer: true, // Ativa o auto-answer com cronômetro
     questionSpoof: true
 };
 
@@ -149,20 +148,6 @@ function spoofQuestion() {
     };
 }
 
-// Função para responder automaticamente às questões a cada 5 segundos
-function autoAnswerWithInterval() {
-    const baseClasses = ["_s6zfc1u", "_ssxvf9l", "_4i5p5ae", "_1r8cd7xe", "_1yok8f4"];
-    let currentIndex = 0;
-
-    setInterval(() => {
-        // Só executa se a funcionalidade estiver ativada
-        if (window.features.autoAnswer) {
-            const clicked = findAndClickByClass(baseClasses[currentIndex]);
-            currentIndex = (currentIndex + 1) % baseClasses.length;
-        }
-    }, 5000); // 5000 ms = 5 segundos
-}
-
 // Função para exibir a tela de inicialização
 async function showSplashScreen() {
     const splashScreen = document.createElement('div');
@@ -216,7 +201,6 @@ loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css');
 loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
     sendToast("🏢 Innovation Khan injetado com sucesso!", 5000, 'bottom');
     spoofQuestion();
-    autoAnswerWithInterval();
     console.clear();
 
     await showSplashScreen();
