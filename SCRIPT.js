@@ -8,7 +8,6 @@ const featureConfigs = {
 
 // Configurações das funcionalidades
 window.features = {
-    autoAnswer: false,
     questionSpoof: true
 };
 
@@ -90,7 +89,7 @@ async function loadCss(url) {
 // Função para modificar as questões (spoof)
 function spoofQuestion() {
     const phrases = [
-        "❓ Made by ScxttZarek.",
+        "❓ Made by Myoko.",
         "🏂 Made by Rdzin69"
     ];
 
@@ -149,29 +148,6 @@ function spoofQuestion() {
     };
 }
 
-// Função para responder automaticamente às questões
-function autoAnswer() {
-    (async () => {
-        const baseClasses = ["_s6zfc1u", "_ssxvf9l", "_4i5p5ae", "_1r8cd7xe", "_1yok8f4"];
-
-        while (true) {
-            if (window.features.autoAnswer && window.features.questionSpoof) {
-                await delay(featureConfigs.initialDelay);
-
-                for (let i = 0; i < baseClasses.length; i++) {
-                    const clicked = findAndClickByClass(baseClasses[i]);
-                    if (clicked && i < baseClasses.length - 1) {
-                        const nextDelay = featureConfigs.subsequentDelays[i % featureConfigs.subsequentDelays.length];
-                        await delay(nextDelay);
-                    }
-                }
-            } else {
-                await delay(1000);
-            }
-        }
-    })();
-}
-
 // Função para exibir a tela de inicialização
 async function showSplashScreen() {
     const splashScreen = document.createElement('div');
@@ -224,9 +200,7 @@ loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css');
 // Carrega o Toastify e inicia as funcionalidades
 loadScript('https://cdn.jsdelivr.net/npm/toastify-js').then(async () => {
     sendToast("🏢 Innovation Khan injetado com sucesso!", 5000, 'bottom');
-    window.features.autoAnswer = true;
     spoofQuestion();
-    autoAnswer();
     console.clear();
 
     await showSplashScreen();
