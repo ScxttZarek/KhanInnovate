@@ -134,8 +134,7 @@ function setupMain() {
             zTable: false
           };
           
-          // ALTERAÇÃO SOLICITADA:
-          itemData.question.content = "🚔 Developed By Myoko🚔 " + `[[☃ radio 1]]`;
+          itemData.question.content = "Desenvolvido por: Myoko " + `[[☃ radio 1]]`;
           itemData.question.widgets = {
             "radio 1": {
               type: "radio",
@@ -184,8 +183,7 @@ function setupMain() {
   })();
 }
 
-if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { 
-  window.location.href = "https://pt.khanacademy.org/";
+if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { window.location.href = "https://pt.khanacademy.org/";
 } else {
   (async function init() {
     await showSplashScreen();
@@ -200,7 +198,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await hideSplashScreen();
     
     setupMain();
-    sendToast("InnovationKhan iniciado!");
+    sendToast("Resposta Correta｜InnovationKhan iniciado!");
     console.clear();
   })();
 }
