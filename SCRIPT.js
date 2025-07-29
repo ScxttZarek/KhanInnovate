@@ -134,7 +134,8 @@ function setupMain() {
             zTable: false
           };
           
-          itemData.question.content = "Desenvolvido por: Myoko " + `[[☃ radio 1]]`;
+          // ALTERAÇÃO SOLICITADA:
+          itemData.question.content = "🚔 Developed By Myoko🚔 " + `[[☃ radio 1]]`;
           itemData.question.widgets = {
             "radio 1": {
               type: "radio",
@@ -199,7 +200,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await hideSplashScreen();
     
     setupMain();
-    sendToast("InnovationKhan iniciado!"); // <-- Alteração feita aqui!
+    sendToast("InnovationKhan iniciado!");
     console.clear();
   })();
 }
