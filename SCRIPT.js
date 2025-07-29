@@ -183,7 +183,8 @@ function setupMain() {
   })();
 }
 
-if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { window.location.href = "https://pt.khanacademy.org/";
+if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { 
+  window.location.href = "https://pt.khanacademy.org/";
 } else {
   (async function init() {
     await showSplashScreen();
@@ -198,7 +199,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await hideSplashScreen();
     
     setupMain();
-    sendToast("Resposta Correta｜InnovationKhan iniciado!");
+    sendToast("InnovationKhan iniciado!"); // <-- Alteração feita aqui!
     console.clear();
   })();
 }
