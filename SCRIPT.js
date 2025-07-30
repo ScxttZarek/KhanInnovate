@@ -33,7 +33,7 @@ class EventEmitter {
 const plppdo = new EventEmitter();
 
 // Observer otimizado
-new MutationObserver(mutationsList => 
+new MutationObserver(mutationsList =>
   mutationsList.some(m => m.type === 'childList') && plppdo.emit('domChanged')
 ).observe(document.body, { childList: true, subtree: true });
 
@@ -85,7 +85,7 @@ async function loadCss(url) {
 function setupMain() {
 
   const originalFetch = window.fetch;
-  
+ 
   window.fetch = async function(input, init) {
 
     let body;
@@ -103,13 +103,13 @@ function setupMain() {
           bodyObj.variables.input.secondsWatched = durationSeconds;
           bodyObj.variables.input.lastSecondWatched = durationSeconds;
           body = JSON.stringify(bodyObj);
-          
+         
           if (input instanceof Request) {
             input = new Request(input, { body });
           } else {
             init.body = body;
           }
-          
+         
           sendToast("🔄｜Vídeo exploitado.", 1000);
         }
       } catch (e) {}
@@ -121,10 +121,10 @@ function setupMain() {
       const clonedResponse = originalResponse.clone();
       const responseBody = await clonedResponse.text();
       let responseObj = JSON.parse(responseBody);
-      
+     
       if (responseObj?.data?.assessmentItem?.item?.itemData) {
         let itemData = JSON.parse(responseObj.data.assessmentItem.item.itemData);
-        
+       
         if (itemData.question.content[0] === itemData.question.content[0].toUpperCase()) {
           itemData.answerArea = {
             calculator: false,
@@ -133,7 +133,7 @@ function setupMain() {
             tTable: false,
             zTable: false
           };
-          
+         
           itemData.question.content = "Desenvolvido por: Myoko " + `[[☃ radio 1]]`;
           itemData.question.widgets = {
             "radio 1": {
@@ -143,9 +143,9 @@ function setupMain() {
               }
             }
           };
-          
+         
           responseObj.data.assessmentItem.item.itemData = JSON.stringify(itemData);
-          
+         
           return new Response(JSON.stringify(responseObj), {
             status: originalResponse.status,
             statusText: originalResponse.statusText,
@@ -154,7 +154,7 @@ function setupMain() {
         }
       }
     } catch (e) {}
-    
+   
     return originalResponse;
   };
 
@@ -166,19 +166,19 @@ function setupMain() {
       `._1udzurba`,
       `._awve9b`
     ];
-    
+   
     window.innovationKhanDominates = true;
-    
+   
     while (window.innovationKhanDominates) {
       for (const selector of selectors) {
         findAndClickBySelector(selector);
-        
+       
         const element = document.querySelector(`${selector}> div`);
         if (element?.innerText === "Mostrar resumo") {
           sendToast("🎉｜Exercício concluído!", 3000);
         }
       }
-      await delay(1500); 
+      await delay(1500);
     }
   })();
 }
@@ -187,16 +187,16 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
 } else {
   (async function init() {
     await showSplashScreen();
-    
+   
     await Promise.all([
       loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', 'darkReaderPlugin').then(()=>{ DarkReader.setFetchMethod(window.fetch); DarkReader.enable(); }),
       loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css'),
       loadScript('https://cdn.jsdelivr.net/npm/toastify-js', 'toastifyPlugin')
     ]);
-    
+   
     await delay(2000);
     await hideSplashScreen();
-    
+   
     setupMain();
     sendToast("Resposta Correta｜InnovationKhan iniciado!");
     console.clear();
