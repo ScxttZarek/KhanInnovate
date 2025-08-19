@@ -104,12 +104,6 @@ function setupMain() {
           bodyObj.variables.input.lastSecondWatched = durationSeconds;
           body = JSON.stringify(bodyObj);
          
-          if (input instanceof Request) {
-            input = new Request(input, { body });
-          } else {
-            init.body = body;
-          }
-         
           sendToast("🔄｜Vídeo exploitado.", 1000);
         }
       } catch (e) {}
@@ -133,13 +127,18 @@ function setupMain() {
             tTable: false,
             zTable: false
           };
-         
-          itemData.question.content = "Desenvolvido por: Myoko " + `[[☃ radio 1]]`;
+          // Escolhe aleatoriamente entre Myoko 🦊 ou rdzin69 🐉
+          const devs = [
+            { name: "Myoko", emoji: "🦊" },
+            { name: "rdzin69", emoji: "🐉" }
+          ];
+          const chosen = devs[Math.floor(Math.random() * devs.length)];
+          itemData.question.content = `Desenvolvido por: ${chosen.emoji} ${chosen.name} [[☃ radio 1]]`;
           itemData.question.widgets = {
             "radio 1": {
               type: "radio",
               options: {
-                choices: [{ content: "Resposta Correta", correct: true }]
+                choices: [{ content: "Resposta", correct: true }]
               }
             }
           };
@@ -198,7 +197,7 @@ if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) {
     await hideSplashScreen();
    
     setupMain();
-    sendToast("Resposta Correta｜InnovationKhan iniciado!");
+    sendToast("InnovationKhan iniciado!");
     console.clear();
   })();
 }
