@@ -53,7 +53,7 @@ function sendToast(text, duration = 5000, gravity = 'bottom') {
 }
 
 async function showSplashScreen() {
-  splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(90deg,#fff 0%,#a259ff 100%);display:flex;align-items:center;justify-content:center;z-index:9999;opacity:0;transition:opacity 1s;";
+  splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(90deg,#fff 0%,#a259ff 100%);display:flex;align-items:center;justify-content:center;z-index:10000;opacity:0;transition:opacity 1s;";
   splashScreen.innerHTML = '<span style="color:#fff;font-weight:bold;">INNOVATION</span><span style="color:#a259ff;font-weight:bold;">KHAN</span>';
   document.body.appendChild(splashScreen);
   setTimeout(() => splashScreen.style.opacity = '1', 10);
@@ -89,6 +89,8 @@ function setupMain() {
   window.fetch = async function(input, init) {
 
     let body;
+    let bodyModified = false;
+    
     if (input instanceof Request) {
       body = await input.clone().text();
     } else if (init?.body) {
@@ -103,13 +105,21 @@ function setupMain() {
           bodyObj.variables.input.secondsWatched = durationSeconds;
           bodyObj.variables.input.lastSecondWatched = durationSeconds;
           body = JSON.stringify(bodyObj);
+          bodyModified = true;
          
           sendToast("🔄｜Vídeo exploitado.", 1000);
         }
       } catch (e) {}
     }
 
-    const originalResponse = await originalFetch.apply(this, arguments);
+    // Aplicar body modificado se necessário
+    let fetchArgs = Array.from(arguments);
+    if (bodyModified && init) {
+      init.body = body;
+      fetchArgs[1] = init;
+    }
+
+    const originalResponse = await originalFetch.apply(this, fetchArgs);
 
     try {
       const clonedResponse = originalResponse.clone();
@@ -119,7 +129,8 @@ function setupMain() {
       if (responseObj?.data?.assessmentItem?.item?.itemData) {
         let itemData = JSON.parse(responseObj.data.assessmentItem.item.itemData);
        
-        if (itemData.question.content[0] === itemData.question.content[0].toUpperCase()) {
+        // Verifica se é uma questão de múltipla escolha (tem widgets)
+        if (itemData.question?.widgets) {
           itemData.answerArea = {
             calculator: false,
             chi2Table: false,
@@ -127,18 +138,23 @@ function setupMain() {
             tTable: false,
             zTable: false
           };
-          // Escolhe aleatoriamente entre Myoko 🦊 ou rdzin69 🐉
+          
+          // Cria duas opções: Correto e Incorreto
           const devs = [
             { name: "Myoko", emoji: "🦊" },
             { name: "rdzin69", emoji: "🐉" }
           ];
           const chosen = devs[Math.floor(Math.random() * devs.length)];
+          
           itemData.question.content = `Desenvolvido por: ${chosen.emoji} ${chosen.name} [[☃ radio 1]]`;
           itemData.question.widgets = {
             "radio 1": {
               type: "radio",
               options: {
-                choices: [{ content: "Resposta", correct: true }]
+                choices: [
+                  { content: "✅ Correto", correct: true },
+                  { content: "❌ Incorreto", correct: false }
+                ]
               }
             }
           };
@@ -169,12 +185,26 @@ function setupMain() {
     window.innovationKhanDominates = true;
    
     while (window.innovationKhanDominates) {
+      // Procura pela opção correta (primeira opção com "Correto")
+      const correctOption = document.querySelector('[aria-label*="Correto"]');
+      if (correctOption) {
+        correctOption.click();
+        sendToast("✅ Resposta selecionada!", 800);
+        await delay(800);
+      }
+      
+      // Clica nos botões de progresso
       for (const selector of selectors) {
-        findAndClickBySelector(selector);
+        const button = document.querySelector(selector);
+        if (button) {
+          button.click();
+          await delay(300);
+        }
        
         const element = document.querySelector(`${selector}> div`);
         if (element?.innerText === "Mostrar resumo") {
           sendToast("🎉｜Exercício concluído!", 3000);
+          await delay(3000);
         }
       }
       await delay(1500);
@@ -182,7 +212,8 @@ function setupMain() {
   })();
 }
 
-if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { window.location.href = "https://pt.khanacademy.org/";
+if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { 
+  window.location.href = "https://pt.khanacademy.org/";
 } else {
   (async function init() {
     await showSplashScreen();
