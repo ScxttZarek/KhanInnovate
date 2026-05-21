@@ -4,28 +4,28 @@ let loadedPlugins = [];
 const splashScreen = document.createElement('splashScreen');
 
 /* Misc Styles */
-document.head.appendChild(Object.assign(document.createElement("style"),{innerHTML:"@font-face{font-family:'MuseoSans';src:url('https://corsproxy.io/?url=https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-30[...]
+document.head.appendChild(Object.assign(document.createElement("style"),{innerHTML:"@font-face{font-family:'MuseoSans';src:url('https://corsproxy.io/?url=https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/font.woff2')}body{font-family:'MuseoSans',sans-serif}"}));
 document.head.appendChild(Object.assign(document.createElement('style'),{innerHTML:"::-webkit-scrollbar { width: 8px; } ::-webkit-scrollbar-track { background: #f1f1f1; } ::-webkit-scrollbar-thumb { background: #7c3aed; } ::-webkit-scrollbar-thumb:hover { background: #6d28d9; }"}));
 document.querySelector("link[rel~='icon']").href = 'https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/ukh0rq22.png';
 
 /* Emmiter */
-class EventEmitter{constructor(){this.events={}}on(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{this.events[t]||(this.events[t]=[]),this.events[t].push(e)})}off(t,e){"string"==typeof t&&(t=[t]),t.fo[...]
+class EventEmitter{constructor(){this.events={}}on(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{this.events[t]||(this.events[t]=[]),this.events[t].push(e)})}off(t,e){"string"==typeof t&&(t=[t]),t.forEach(t=>{if(this.events[t]){const s=this.events[t].indexOf(e);-1!==s&&this.events[t].splice(s,1)}})}emit(t,e){this.events[t]&&this.events[t].forEach(s=>s(e))}}
 const plppdo = new EventEmitter();
 
-new MutationObserver((mutationsList) => { for (let mutation of mutationsList) if (mutation.type === 'childList') plppdo.emit('domChanged'); }).observe(document.body, { childList: true, subtree: true }[...]
+new MutationObserver((mutationsList) => { for (let mutation of mutationsList) if (mutation.type === 'childList') plppdo.emit('domChanged'); }).observe(document.body, { childList: true, subtree: true });
 
 /* Misc Functions */
 const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
 const playAudio = url => { const audio = new Audio(url); audio.play(); };
 const findAndClickBySelector = selector => { const element = document.querySelector(selector); if (element) { element.click(); } };
 
-function sendToast(text, duration=5000, gravity='bottom') { Toastify({ text: text, duration: duration, gravity: gravity, position: "center", stopOnFocus: true, style: { background: "#7c3aed" } }).show[...]
+function sendToast(text, duration=5000, gravity='bottom') { Toastify({ text: text, duration: duration, gravity: gravity, position: "center", stopOnFocus: true, style: { background: "#7c3aed" } }).show(); }
 
-async function showSplashScreen() { splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, #7c3aed 0%, #ffffff 100%);display:flex;align-items:center;justify-content:center;z-inde[...]
+async function showSplashScreen() { splashScreen.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg, #7c3aed 0%, #ffffff 100%);display:flex;align-items:center;justify-content:center;z-index:9999;opacity:1;transition:opacity 1s ease;"; document.body.appendChild(splashScreen); }
 async function hideSplashScreen() { splashScreen.style.opacity = '0'; setTimeout(() => splashScreen.remove(), 1000); };
 
 async function loadScript(url, label) { return fetch(url).then(response => response.text()).then(script => { loadedPlugins.push(label); eval(script); }); }
-async function loadCss(url) { return new Promise((resolve) => { const link = document.createElement('link'); link.rel = 'stylesheet'; link.type = 'text/css'; link.href = url; link.onload = () => resol[...]
+async function loadCss(url) { return new Promise((resolve) => { const link = document.createElement('link'); link.rel = 'stylesheet'; link.type = 'text/css'; link.href = url; link.onload = () => resolve(); document.head.appendChild(link); }); }
 
 /* Main Functions */ 
 function setupMain(){
@@ -41,14 +41,12 @@ function setupMain(){
         const originalFetch = window.fetch;
         const correctAnswers = new Map();
 
-        const toFraction = (d) => { if (d === 0 || d === 1) return String(d); const decimals = (String(d).split('.')[1] || '').length; let num = Math.round(d * Math.pow(10, decimals)), den = Math.pow([...]
-        const createEmptyResponse = (bodyObj) => { const emptyBody = JSON.parse(JSON.stringify(bodyObj)); emptyBody.variables.input.attemptContent = "[[]]"; emptyBody.variables.input.userInput = "{}";[...]
+        const toFraction = (d) => { if (d === 0 || d === 1) return String(d); const decimals = (String(d).split('.')[1] || '').length; let num = Math.round(d * Math.pow(10, decimals)), den = Math.pow(10, decimals); while (num % 2 === 0) { num /= 2; den /= 2; } while (num % 5 === 0) { num /= 5; den /= 5; } return den === 1 ? String(num) : num + "/" + den; };
+        const createEmptyResponse = (bodyObj) => { const emptyBody = JSON.parse(JSON.stringify(bodyObj)); emptyBody.variables.input.attemptContent = "[[]]"; emptyBody.variables.input.userInput = "{}"; return emptyBody; };
         const isWidgetUsed = (widgetKey, questionContent, hints) => {
             const widgetPattern = `☃ ${widgetKey.replace(/\s+/g, ' ')}`;
             
             if (questionContent.includes(widgetPattern)) return true;
-            // Fucking type 2
-            // 2
             if (hints && Array.isArray(hints)) {
                 for (const hint of hints) {
                     if (hint.content && hint.content.includes(widgetPattern)) return true;
@@ -592,7 +590,7 @@ function setupMain(){
                             headers: res.headers 
                         });
                     }
-                } catch (e) { debug(`🚨 Error @ questionSpoof.js (getAssessmentItem)\n${e}`); }
+                } catch (e) { console.error(`Error @ questionSpoof.js`, e); }
                 return res;
             }
             
@@ -657,16 +655,16 @@ function setupMain(){
                                             });
                                         }
                                     }
-                                } catch (e) { debug(`🚨 Error @ questionSpoof.js (attemptProblem response)\n${e}`); }
+                                } catch (e) { console.error(`Error`, e); }
 
                                 sendToast(`✨ ${answers.length} resposta(s) aplicada(s).`, 750);
                                 return secondAttempt;
                             }
                         }
-                    } catch (e) { debug(`🚨 Error @ questionSpoof.js (attemptProblem response)\n${e}`); }
+                    } catch (e) { console.error(`Error`, e); }
                     
                     return firstAttempt;
-                } catch (e) { debug(`🚨 Error @ questionSpoof.js (attemptProblem response)\n${e}`); }
+                } catch (e) { console.error(`Error`, e); }
             }
             
             return originalFetch.apply(this, arguments);
@@ -732,7 +730,6 @@ function setupMain(){
                             
                             for (let i = 0; i < percentages.length; i++) {
                                 const watchedSeconds = Math.floor(durationSeconds * percentages[i]);
-                                const percentLabel = (percentages[i] * 100).toFixed(0);
                                                                 
                                 let modifiedBodyObj = JSON.parse(JSON.stringify(bodyObj));
                                 modifiedBodyObj.variables.input.secondsWatched = watchedSeconds;
@@ -800,8 +797,8 @@ function setupMain(){
         })();
     })();
 }
-/* Inject */
-if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { alert("❌ InnovationKhan Failed to Injected!\n\nVocê precisa executar o InnovationKhan no site do Khan Academy! (https://pt.khana[...]
+
+if (!/^https?:\/\/([a-z0-9-]+\.)?khanacademy\.org/.test(window.location.href)) { alert("❌ InnovationKhan Failed to Inject!\n\nYou need to run InnovationKhan on Khan Academy site! (https://www.khanacademy.org)"); }
 
 showSplashScreen();
 
@@ -809,7 +806,7 @@ loadScript('https://cdn.jsdelivr.net/npm/darkreader@4.9.92/darkreader.min.js', '
 loadCss('https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css', 'toastifyCss');
 loadScript('https://cdn.jsdelivr.net/npm/toastify-js', 'toastifyPlugin')
 .then(async () => {    
-    sendToast("🪶 InnovationKhan injetado com sucesso!");
+    sendToast("🪶 InnovationKhan injected successfully!");
 
     playAudio('https://r2.e-z.host/4d0a0bea-60f8-44d6-9e74-3032a64a9f32/gcelzszy.wav');
     
